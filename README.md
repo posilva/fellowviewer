@@ -13,5 +13,5 @@
 
 - install golang (https://golang.org/doc/install)
 - checkout this repo
-- go build -o fellowviewer .
+- check Makefile for build instructions
 
