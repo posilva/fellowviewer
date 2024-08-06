@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"encoding/json"
 	"fmt"
 	"html"
@@ -11,6 +12,9 @@ import (
 
 	"github.com/urfave/cli/v2"
 )
+
+//go:embed template.tpl
+var templateTpl embed.FS
 
 type User struct {
 	Email      string `json:"email"`
@@ -128,7 +132,7 @@ func run(jsonF string, htmlF string) {
 	tmpl, err := template.New("template.tpl").Funcs(
 		template.FuncMap{
 			"unscapeHtml": unscapeHtml,
-		}).ParseFiles("template.tpl")
+		}).ParseFS(templateTpl, "template.tpl")
 	if err != nil {
 		log.Panic(err)
 	}
