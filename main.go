@@ -9,6 +9,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -97,10 +98,7 @@ func main() {
 		Action: func(c *cli.Context) error {
 			inputFile := c.String("input")
 			outputFile := c.String("output")
-
 			run(inputFile, outputFile)
-			// Your logic here to process the input file and write to the output file
-
 			return nil
 		},
 	}
@@ -132,6 +130,7 @@ func run(jsonF string, htmlF string) {
 	tmpl, err := template.New("template.tpl").Funcs(
 		template.FuncMap{
 			"unscapeHtml": unscapeHtml,
+			"handleArray": handleArrayStrings,
 		}).ParseFS(templateTpl, "template.tpl")
 	if err != nil {
 		log.Panic(err)
@@ -151,4 +150,8 @@ func run(jsonF string, htmlF string) {
 
 func unscapeHtml(str string) template.HTML {
 	return template.HTML(html.UnescapeString(str))
+}
+
+func handleArrayStrings(str []string) template.HTML {
+	return template.HTML(html.UnescapeString(strings.Join(str, "<br>")))
 }

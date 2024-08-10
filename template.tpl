@@ -75,7 +75,7 @@
     {{ range .Notes }}
     <li>
       <h3>{{ .Title }}</h3>
-      <p>{{ html .Content }}</p>
+      <p>{{ handleArray .Content }}</p>
       <p><strong>Start:</strong> {{ .Start }}</p>
       <p><strong>End:</strong> {{ .End }}</p>
     </li>
